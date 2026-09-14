@@ -77,12 +77,12 @@ class CountFromSolrViewHelper extends AbstractViewHelper
         }
 
         $activeFacets = $this->arguments['activeFacets'];
-        $queryConcat = $this->arguments['queryConcat'];
 
         $newQuery = $this->arguments['query'];
 
-        if ($findParameter['q']['default']) {
-            $newQuery = $newQuery . ' AND ' . $findParameter['q']['default'];
+        if (!empty($findParameter['q']['default'])) {
+            $escapedTerm = $this->solr->createSelect()->getHelper()->escapeTerm((string)$findParameter['q']['default']);
+            $newQuery = $newQuery . ' AND ' . $escapedTerm;
         }
 
         if ($activeFacets) {
@@ -91,10 +91,6 @@ class CountFromSolrViewHelper extends AbstractViewHelper
                     $newQuery = $newQuery . ' AND ' . $facet['query'];
                 }
             }
-        }
-
-        if ($queryConcat) {
-            $newQuery .= ' AND ' . $queryConcat;
         }
 
         $query = $this->createQuery($newQuery);

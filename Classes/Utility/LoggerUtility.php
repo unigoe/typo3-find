@@ -68,7 +68,7 @@ final class LoggerUtility
      *     line:     int,
      *     trace:    list<array<string,mixed>>,
      *     traceAsString: string,
-     *     previous: array|null
+     *     previous: array|null (only set when a previous exception is included)
      * }
      */
     public static function exceptionToArray(

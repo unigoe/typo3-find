@@ -53,7 +53,7 @@ class CSVLineViewHelper extends AbstractViewHelper
 
         // Write CSV to pseudo-file as PHP cannot write it directly to a string.
         $fp = fopen('php://temp', 'r+');
-        fputcsv($fp, $data, $this->arguments['fieldDelimiter'], $this->arguments['fieldEnclosure']);
+        fputcsv($fp, $data, $this->arguments['fieldDelimiter'], $this->arguments['fieldEnclosure'], '\\');
         rewind($fp);
         $result = fgets($fp);
         fclose($fp);

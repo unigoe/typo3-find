@@ -33,7 +33,7 @@ class LoggerUtilityTest extends UnitTestCase
 
         $result = LoggerUtility::exceptionToArray($exception, false, 10);
 
-        self::assertNull($result['previous']);
+        self::assertArrayNotHasKey('previous', $result);
     }
 
     #[Test]
@@ -70,7 +70,7 @@ class LoggerUtilityTest extends UnitTestCase
 
         $result = LoggerUtility::exceptionToArray($exception, true, 10);
 
-        self::assertNull($result['previous']);
+        self::assertArrayNotHasKey('previous', $result);
     }
 
     #[Test]
