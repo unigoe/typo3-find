@@ -45,9 +45,7 @@ class TitleViewHelper extends AbstractViewHelper
     public function render(): void
     {
         $title = $this->arguments['title'];
-        if ($title === null) {
-            $title = $this->renderChildren();
-        }
+        $title ??= $this->renderChildren();
 
         // Sanitize title to prevent XSS
         $title = htmlspecialchars((string)$title, ENT_QUOTES, 'UTF-8');

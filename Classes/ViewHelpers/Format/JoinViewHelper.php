@@ -52,9 +52,7 @@ class JoinViewHelper extends AbstractViewHelper
     public function render(): string
     {
         $array = $this->arguments['array'];
-        if ($array === null) {
-            $array = $this->renderChildren();
-        }
+        $array ??= $this->renderChildren();
 
         return implode($this->arguments['separator'], $array);
     }

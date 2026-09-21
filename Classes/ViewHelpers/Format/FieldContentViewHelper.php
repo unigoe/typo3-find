@@ -49,7 +49,7 @@ class FieldContentViewHelper extends AbstractViewHelper
         }
 
         if (empty($string)) {
-            $string = '';
+            return '';
         }
 
         return $string;

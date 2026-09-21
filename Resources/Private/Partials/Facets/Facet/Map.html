@@ -40,8 +40,8 @@
 <s:page.script file="https://raw.githubusercontent.com/subugoe/js-geohash/master/geohash.js" name="find_geohash"/>
 
 <s:page.script name="find_geohash">
-	tx_find_facetMap.init ({
-		container: jQuery('.facet-id-{facetInfo.id} .mapContainer')[0],
+		tx_find_facetMap.init ({
+			container: document.querySelector('.facet-id-{facetInfo.id} .mapContainer'),
 		queryURLTemplate: {f:format.json(value:"{f:uri.action(
 			addQueryString:TRUE,
 			arguments:'{

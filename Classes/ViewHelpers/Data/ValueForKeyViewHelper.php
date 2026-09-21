@@ -46,12 +46,9 @@ class ValueForKeyViewHelper extends AbstractViewHelper
     #[\Override]
     public function render()
     {
-        $result = null;
-
         if ((is_int($this->arguments['key']) || is_string($this->arguments['key'])) && ($this->arguments['array'] && array_key_exists($this->arguments['key'], $this->arguments['array']))) {
-            $result = $this->arguments['array'][$this->arguments['key']];
+            return $this->arguments['array'][$this->arguments['key']];
         }
-
-        return $result;
+        return null;
     }
 }

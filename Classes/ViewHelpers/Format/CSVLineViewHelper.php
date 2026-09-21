@@ -47,9 +47,7 @@ class CSVLineViewHelper extends AbstractViewHelper
     public function render(
     ): false|string {
         $data = $this->arguments['data'];
-        if ($data === null) {
-            $data = $this->renderChildren();
-        }
+        $data ??= $this->renderChildren();
 
         // Write CSV to pseudo-file as PHP cannot write it directly to a string.
         $fp = fopen('php://temp', 'r+');

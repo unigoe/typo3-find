@@ -1,0 +1,33 @@
+rootPageId: 1
+websiteTitle: 'TYPO3 Find'
+base: 'https://typo3-find.ddev.site/'
+languages:
+  -
+    title: English
+    enabled: true
+    languageId: 0
+    base: /
+    typo3Language: default
+    locale: en_US
+    iso-639-1: en
+    navigationTitle: ''
+    hreflang: en-US
+    flag: us
+errorHandling: {  }
+routes: {  }
+routeEnhancers:
+  Find:
+    type: Extbase
+    extension: Find
+    plugin: Find
+    routes:
+      - routePath: '/detail/{id}'
+        _controller: 'Search::detail'
+        _arguments:
+          id: 'id'
+        requirements:
+          id: '.+'
+      - routePath: '/search/{q}'
+        _controller: 'Search::index'
+        _arguments:
+          q: 'q/default'

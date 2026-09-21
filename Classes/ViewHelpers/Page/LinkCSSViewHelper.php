@@ -59,6 +59,8 @@ class LinkCSSViewHelper extends AbstractViewHelper
     public function render(): string
     {
         $fileNameFromArguments = $this->arguments['file'];
+        $CSSFileName = '';
+
         if ($fileNameFromArguments) {
             $CSSFileName = $this->filePathSanitizer->sanitize($fileNameFromArguments);
         }
@@ -66,5 +68,7 @@ class LinkCSSViewHelper extends AbstractViewHelper
         if ($CSSFileName !== '' && $CSSFileName !== '0') {
             $this->pageRenderer->addCSSFile($CSSFileName);
         }
+
+        return '';
     }
 }

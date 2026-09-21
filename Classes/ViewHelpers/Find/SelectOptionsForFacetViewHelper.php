@@ -49,7 +49,7 @@ class SelectOptionsForFacetViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'leadingBlank',
             'boolean',
-            'begin the select with a blank item? (for jquery.chosen)',
+            'begin the select with a blank item?',
             false,
             false
         );

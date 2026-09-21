@@ -60,9 +60,7 @@ class RegexpViewHelper extends AbstractViewHelper
     public function render(): string|array|false|null|int
     {
         $input = $this->arguments['string'];
-        if ($input === null) {
-            $input = $this->renderChildren();
-        }
+        $input ??= $this->renderChildren();
 
         if ($this->arguments['replace'] === null) {
             $result = preg_match($this->arguments['match'], (string)$input);

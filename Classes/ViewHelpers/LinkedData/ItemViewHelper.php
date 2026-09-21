@@ -58,13 +58,9 @@ class ItemViewHelper extends AbstractViewHelper
         // Initialize container as empty array if it doesn't exist yet
         $container = $this->renderingContext->getVariableProvider()->get($this->arguments['name']) ?? [];
 
-        if (!isset($container[$this->arguments['subject']])) {
-            $container[$this->arguments['subject']] = [];
-        }
+        $container[$this->arguments['subject']] ??= [];
 
-        if (!isset($container[$this->arguments['subject']][$this->arguments['predicate']])) {
-            $container[$this->arguments['subject']][$this->arguments['predicate']] = [];
-        }
+        $container[$this->arguments['subject']][$this->arguments['predicate']] ??= [];
 
         if ($this->arguments['object'] !== null) {
             $container[$this->arguments['subject']][$this->arguments['predicate']][$this->arguments['object']] = null;

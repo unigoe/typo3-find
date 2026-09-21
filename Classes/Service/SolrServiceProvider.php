@@ -222,22 +222,17 @@ class SolrServiceProvider implements ServiceProviderInterface
 
         if (!empty($this->settings['paging']['detailPagePaging'])
             && array_key_exists('underlyingQuery', $arguments)
-            && is_array($arguments['underlyingQuery'])
-        ) {
+            && is_array($arguments['underlyingQuery'])) {
             $underlyingQueryInfo = $arguments['underlyingQuery'];
             $index               = FrontendUtility::getIndexes($underlyingQueryInfo);
             $mergedArguments     = $this->mergeUnderlyingQuery($arguments, $underlyingQueryInfo);
-
             $this->createQueryForArguments($mergedArguments);
             $this->query->setStart($index['previousIndex']);
             $this->query->setRows($index['nextIndex'] - $index['previousIndex'] + 1);
-
-            $assignments = $this->getRecordsWithUnderlyingQuery($assignments, $index, $id, $mergedArguments);
-        } else {
-            $assignments = $this->getTheRecordSpecified($id, $assignments);
+            return $this->getRecordsWithUnderlyingQuery($assignments, $index, $id, $mergedArguments);
         }
 
-        return $assignments;
+        return $this->getTheRecordSpecified($id, $assignments);
     }
 
     private function mergeUnderlyingQuery(array $arguments, array $underlyingQueryInfo): array
@@ -346,10 +341,14 @@ class SolrServiceProvider implements ServiceProviderInterface
         try {
             $solrResults = $this->getConnection()->execute($query)->getResults();
 
-            foreach ($solrResults as $suggestions) {
-                $suggestionsArray = $suggestions->getSuggestions();
-                if (is_array($suggestionsArray)) {
-                    array_push($results, ...$suggestionsArray);
+            foreach ($solrResults as $dictionary) {
+                foreach ($dictionary->getTerms() as $term) {
+                    foreach ($term->getSuggestions() as $suggestion) {
+                        // Solr's suggester returns objects ({term, weight, payload}) with
+                        // highlighting markup; the frontend expects plain strings.
+                        $suggestionTerm = is_array($suggestion) ? ($suggestion['term'] ?? '') : (string)$suggestion;
+                        $results[] = strip_tags($suggestionTerm);
+                    }
                 }
             }
         } catch (HttpException $httpException) {

@@ -58,9 +58,7 @@ class StripViewHelper extends AbstractViewHelper
     public function render(): string
     {
         $string = $this->arguments['string'];
-        if ($string === null) {
-            $string = $this->renderChildren();
-        }
+        $string ??= $this->renderChildren();
 
         return $this->arguments['strip'] === null ? trim((string)$string) : trim((string)$string, $this->arguments['strip']);
     }

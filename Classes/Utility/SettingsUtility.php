@@ -102,7 +102,7 @@ final class SettingsUtility
 
         // Merge action-specific overrides on top of the defaults when present.
         if (array_key_exists($actionName, $setting) && is_array($setting[$actionName])) {
-            $config = array_replace_recursive($config, $setting[$actionName]);
+            return array_replace_recursive($config, $setting[$actionName]);
         }
 
         return $config;

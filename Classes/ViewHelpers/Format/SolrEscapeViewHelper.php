@@ -47,9 +47,7 @@ class SolrEscapeViewHelper extends AbstractViewHelper
     public function render(): string
     {
         $string = $this->arguments['string'];
-        if ($string === null) {
-            $string = $this->renderChildren();
-        }
+        $string ??= $this->renderChildren();
 
         $solariumHelper = new Helper();
 

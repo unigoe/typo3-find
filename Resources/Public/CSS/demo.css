@@ -1,0 +1,197 @@
+/*
+ Demo site styling for the TYPO3 Find demo.
+ Loaded via the site template on top of the extension's find.css.
+*/
+
+:root {
+    --demo-bg: #f2f5f9;
+    --demo-card: #ffffff;
+    --demo-accent: #263476;
+    --demo-accent-dark: #1b2554;
+    --demo-border: #e3e8ef;
+    --demo-muted: #5d6a82;
+}
+
+body {
+    margin: 0;
+    background: var(--demo-bg);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1f2533;
+    line-height: 1.55;
+}
+
+a {
+    color: var(--demo-accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Site header */
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid var(--demo-border);
+    padding: 1.1rem 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, .05);
+}
+
+.site-header h1 {
+    margin: 0;
+    font-size: 1.45rem;
+    letter-spacing: -.01em;
+    color: var(--demo-accent);
+}
+
+.site-header p {
+    margin: 0;
+    color: var(--demo-muted);
+    font-size: .95rem;
+}
+
+/* Content wrapper */
+.site-content {
+    max-width: 75rem;
+    margin: 2rem auto;
+    padding: 0 2rem 3rem;
+}
+
+/* Search area */
+.tx_find {
+    background: var(--demo-card);
+    border: 1px solid var(--demo-border);
+    border-radius: 14px;
+    padding: 1.5rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(16, 24, 40, .07);
+}
+
+.tx_find .searchForm {
+    background: var(--demo-bg);
+    border: 1px solid var(--demo-border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+}
+
+.tx_find form .fieldContainer input,
+.tx_find form .fieldContainer select {
+    border-radius: 7px;
+    border: 1px solid #c7cfe0;
+    background: #fff;
+}
+
+.tx_find form .fieldContainer input:focus,
+.tx_find form .fieldContainer select:focus {
+    outline: 2px solid #b9c5ea;
+    outline-offset: 1px;
+}
+
+.tx_find form .submit {
+    background: var(--demo-accent);
+    border: 0;
+    border-radius: 7px;
+    color: #fff;
+    text-shadow: none;
+    height: 34px;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    transition: background .15s ease;
+}
+
+.tx_find form .submit:hover,
+.tx_find form .submit:active {
+    background: var(--demo-accent-dark);
+}
+
+.tx_find form .submit,
+.tx_find form .submit:hover {
+    text-decoration: none;
+}
+
+/* Facets */
+.tx_find .facets div.facet {
+    background: var(--demo-card);
+    border: 1px solid var(--demo-border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+}
+
+.tx_find .facets div.facet h1 {
+    color: var(--demo-accent);
+}
+
+.tx_find .facets .facetList a:hover {
+    text-decoration: underline;
+}
+
+/* Results */
+.tx_find .results ol.resultList {
+    list-style: none;
+    padding-left: 0;
+}
+
+.tx_find .results ol.resultList li {
+    padding: .9em 1em .9em 1.25em;
+    border-bottom: 1px solid var(--demo-border);
+    border-radius: 8px;
+    transition: background .15s ease;
+}
+
+.tx_find .results ol.resultList li:hover {
+    background: #f7f9fd;
+}
+
+.tx_find .results ol.resultList li:target {
+    background: var(--color-backgroundActive);
+}
+
+.tx_find .results ol.resultList h1 a {
+    color: var(--demo-accent);
+    font-weight: 600;
+}
+
+.tx_find .results .snippet {
+    color: var(--demo-muted);
+}
+
+/* Pager */
+.tx_find .listPager ol li a {
+    border-radius: 6px;
+}
+
+.tx_find .listPager ol li a:hover {
+    background: #e8edf7;
+    text-decoration: none;
+}
+
+/* Detail view */
+.tx_find article.detail {
+    background: var(--demo-card);
+}
+
+.tx_find article.detail dt {
+    color: var(--demo-muted);
+    font-size: .9rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.tx_find article.detail dd {
+    margin-bottom: 1.2rem;
+}
+
+/* Footer note */
+.site-footer {
+    text-align: center;
+    color: var(--demo-muted);
+    font-size: .85rem;
+    margin-top: 2rem;
+}
+
+.site-footer a {
+    color: var(--demo-muted);
+}

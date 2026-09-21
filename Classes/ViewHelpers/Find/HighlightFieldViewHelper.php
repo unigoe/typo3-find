@@ -183,7 +183,7 @@ class HighlightFieldViewHelper extends AbstractViewHelper
 
         // If no highlighted string is present, use the original one.
         if ($result === null) {
-            $result = htmlspecialchars($fieldString);
+            return htmlspecialchars($fieldString);
         }
 
         return $result;

@@ -16,6 +16,9 @@ are included in the extension.
 For developing this extension clone this repository and install the
 dependencies via composer with `composer install`.
 
+A complete local demo site (DDEV, TYPO3 13, Solr 9, demo data) is included.
+See [SETUP.md](SETUP.md) for URLs, credentials and how it works.
+
 ## Aims
 
 The extensions aims are to provide:
@@ -980,19 +983,55 @@ can be found under the component-key `find` in the TYPO3 log, i.e.:
 
 `06 Jun 2016 06:36:06 +0000 [ERROR] request="e2737b83ada7d" component="find": Solr Exception (Timeout?)`
 
-## RealURL
+## Routing / Pretty URLs
 
-The extension includes a hook for RealURL autoconfiguration. It mainly
-handles the parameter name for the detail view by using a
-`id/documentID` path segment.
+By default, the plugin’s URLs use query parameters like
+`?tx_find_find[id]=…` and `?tx_find_find[q][default]=…`. A route
+enhancer in the site configuration turns them into readable URLs, e.g.
+`/detail/<documentID>` and `/search/<term>`:
 
-URLs for queries and faceting are not prettified and – if required –
-will need to be manually configured due to the query parameter names
-depending on the `id` s used for fields and facets.
+```yaml
+routeEnhancers:
+  Find:
+    type: Extbase
+    extension: Find
+    plugin: Find
+    routes:
+      - routePath: '/detail/{id}'
+        _controller: 'Search::detail'
+        _arguments:
+          id: 'id'
+        requirements:
+          id: '.+'
+      - routePath: '/search/{q}'
+        _controller: 'Search::index'
+        _arguments:
+          q: 'q/default'
+```
+
+Notes:
+
+- `_controller` is required per route: without it, requests fall back
+    to the default `index` action and URL generation falls back to the
+    query parameter form.
+- `_arguments` maps a route placeholder to the argument path inside the
+    `tx_find_find` namespace: `q: 'q/default'` matches
+    `tx_find_find[q][default]`; replace `default` with the ID of your
+    configured query field.
+- `requirements: id: '.+'` allows Solr document IDs containing slashes
+    (e.g. DOIs or URLs). Arguments violating a route’s requirements make
+    URL generation fall back to the query parameter form.
+- Arguments with dynamic keys (`facet`, `page`, `sort`) remain query
+    parameters – they cannot be mapped to route paths.
+- The search form submits via GET, so submitting a query still produces
+    a query parameter URL; the pretty URL applies to generated links
+    (detail, pager, …) and shared/bookmarked URLs.
+- Site sets cannot provide route enhancers, so this configuration has
+    to be added to every site’s `config.yaml` that uses the plugin.
 
 ## Prerequisites
 
-- TYPO3 12.4
+- TYPO3 13.4
 - PHP 8.2 or higher
 
 ## Testing

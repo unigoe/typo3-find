@@ -52,9 +52,7 @@ class SplitViewHelper extends AbstractViewHelper
     public function render(
     ): array {
         $string = $this->arguments['string'];
-        if ($string === null) {
-            $string = $this->renderChildren();
-        }
+        $string ??= $this->renderChildren();
 
         if (empty($this->arguments['separator'])) {
             $this->arguments['separator'] = self::DEFAULT_SEPARATOR;

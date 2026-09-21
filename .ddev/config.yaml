@@ -291,3 +291,8 @@ corepack_enable: false
 #hooks:
 #  post-start:
 #    - exec: composer install -d /var/www/html
+
+# Demo setup: installs TYPO3, site config, demo content and the Solr index.
+hooks:
+  post-start:
+    - exec: bash /var/www/html/.ddev/setup/setup-demo.sh

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Schema for the TYPO3 Find demo: universities and academic libraries (Wikidata, CC0).
+ Facet fields (*_facet) are strings, year/students are numeric for the Histogram facet.
+-->
+<schema name="find-demo" version="1.6">
+  <uniqueKey>id</uniqueKey>
+
+  <field name="id" type="string" indexed="true" stored="true" required="true"/>
+  <field name="title" type="text_general" indexed="true" stored="true"/>
+  <field name="title_sort" type="string" indexed="true" stored="false" docValues="true"/>
+  <field name="snippet" type="text_general" indexed="true" stored="true"/>
+  <field name="type" type="string" indexed="true" stored="true"/>
+  <field name="type_facet" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="country" type="text_general" indexed="true" stored="true"/>
+  <field name="country_facet" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="city" type="text_general" indexed="true" stored="true"/>
+  <field name="city_facet" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="year" type="pint" indexed="true" stored="true"/>
+  <field name="students" type="pint" indexed="true" stored="true"/>
+  <field name="website" type="string" indexed="false" stored="true"/>
+  <field name="lat" type="pdouble" indexed="true" stored="true"/>
+  <field name="lon" type="pdouble" indexed="true" stored="true"/>
+  <field name="_text_" type="text_general" indexed="true" stored="false" multiValued="true"/>
+  <field name="_version_" type="long" indexed="false" stored="false" docValues="true"/>
+
+  <copyField source="title" dest="_text_"/>
+  <copyField source="title" dest="title_sort"/>
+  <copyField source="snippet" dest="_text_"/>
+  <copyField source="type" dest="_text_"/>
+  <copyField source="country" dest="_text_"/>
+  <copyField source="city" dest="_text_"/>
+  <copyField source="website" dest="_text_"/>
+
+  <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+  <fieldType name="long" class="solr.LongPointField" docValues="true"/>
+  <fieldType name="pint" class="solr.IntPointField" docValues="true"/>
+  <fieldType name="pdouble" class="solr.DoublePointField" docValues="true"/>
+  <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+    <analyzer>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+</schema>

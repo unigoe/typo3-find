@@ -1,0 +1,25 @@
+# Solr service for the TYPO3 Find demo.
+# The core »find« is created at startup with the configset in .ddev/solr/configset/find.
+# The index data lives in the »solr-data« volume, so it survives restarts.
+# Admin UI: http://localhost:18983/solr — TYPO3 connects to solr:8983.
+services:
+  solr:
+    image: solr:9
+    container_name: ddev-${DDEV_SITENAME}-solr
+    restart: 'no'
+    command: solr-precreate find /configsets/find
+    volumes:
+      - ./solr/configset/find:/configsets/find:ro
+      - solr-data:/var/solr
+    ports:
+      - 127.0.0.1:18983:8983
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8983/solr/find/admin/ping || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+
+volumes:
+  solr-data:
