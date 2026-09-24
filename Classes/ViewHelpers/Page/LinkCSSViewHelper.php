@@ -26,7 +26,7 @@ namespace Subugoe\Find\ViewHelpers\Page;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
-use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Exception\InvalidFileException;
 use TYPO3\CMS\Core\Resource\Exception\InvalidFileNameException;
@@ -41,7 +41,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class LinkCSSViewHelper extends AbstractViewHelper
 {
-    public function __construct(private readonly PageRenderer $pageRenderer, private readonly FilePathSanitizer $filePathSanitizer) {}
+    public function __construct(private readonly AssetCollector $assetCollector, private readonly FilePathSanitizer $filePathSanitizer) {}
 
     public function initializeArguments(): void
     {
@@ -57,13 +57,16 @@ class LinkCSSViewHelper extends AbstractViewHelper
      */
     public function render(): string
     {
+        $CSSFileName = '';
         $fileNameFromArguments = $this->arguments['file'];
         if ($fileNameFromArguments) {
             $CSSFileName = $this->filePathSanitizer->sanitize($fileNameFromArguments);
         }
 
         if ($CSSFileName !== '' && $CSSFileName !== '0') {
-            $this->pageRenderer->addCSSFile($CSSFileName);
+            $this->assetCollector->addStyleSheet('find-' . md5($CSSFileName), $CSSFileName);
         }
+
+        return '';
     }
 }

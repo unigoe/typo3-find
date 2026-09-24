@@ -33,7 +33,7 @@ use Subugoe\Find\Service\ServiceProviderInterface;
 use Subugoe\Find\Utility\ArrayUtility;
 use Subugoe\Find\Utility\FrontendUtility;
 use TYPO3\CMS\Core\Page\AssetCollector;
-use TYPO3\CMS\Core\PageTitle\PageTitleProviderInterface;
+use TYPO3\CMS\Core\PageTitle\PageTitleProviderManager;
 use TYPO3\CMS\Core\Utility\ArrayUtility as CoreArrayUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -42,7 +42,7 @@ class SearchController extends ActionController
 {
     protected array $requestArguments = [];
 
-    public function __construct(private readonly AssetCollector $assetCollector, private readonly ServiceProviderInterface $searchProvider, private readonly PageTitleProviderInterface $pageTitleProvider) {}
+    public function __construct(private readonly AssetCollector $assetCollector, private readonly ServiceProviderInterface $searchProvider, private readonly PageTitleProviderManager $pageTitleProviderManager) {}
 
     /**
      * @throws \JsonException
@@ -150,7 +150,7 @@ class SearchController extends ActionController
             $this->request->getAttribute('currentContentObject')->data['uid']
         );
         $this->searchProvider->setConfigurationValue('prefixID', 'tx_find_find');
-        $this->searchProvider->setConfigurationValue('pageTitle', $this->pageTitleProvider->getTitle());
+        $this->searchProvider->setConfigurationValue('pageTitle', $this->pageTitleProviderManager->getTitle($this->request));
     }
 
     protected function initializeConnection(string $activeConnection): void

@@ -11,9 +11,9 @@ $EM_CONF['find'] = [
     'author_company' => 'SUB Göttingen',
     'constraints' => [
         'depends' => [
-            'php' => '8.2.0-8.3.99',
-            'typo3' => '12.4.0-12.4.99',
-            'felogin' => '12.4.0-12.4.99',
+            'php' => '8.2.0-8.5.99',
+            'typo3' => '14.0.0-14.99.99',
+            'felogin' => '14.0.0-14.99.99',
         ],
         'conflicts' => [],
         'suggests' => [],

@@ -26,15 +26,18 @@ namespace Subugoe\Find\ViewHelpers\Page;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ******************************************************************************/
+use TYPO3\CMS\Core\PageTitle\RecordTitleProvider;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * View Helper to join the elements of an array into a string.
+ * View Helper to set the title of the page.
  *
  * Usage examples are available in Private/Partials/Test.html.
  */
 class TitleViewHelper extends AbstractViewHelper
 {
+    public function __construct(private readonly RecordTitleProvider $recordTitleProvider) {}
+
     public function initializeArguments(): void
     {
         parent::initializeArguments();
@@ -48,24 +51,7 @@ class TitleViewHelper extends AbstractViewHelper
             $title = $this->renderChildren();
         }
 
-        /*
-         * Hack-ish approach to deal with TYPO3 Caching problems.
-         * 1. Apparently our changes to $GLOBALS['TSFE']->page['title'] only work for cached plugins
-         * 2. I do not see a way to get correct results for the GET and POST parameters sent when the plugin is cached
-         * 3. Manually replace the existing page title with the one we want if $GLOBALS['TSFE']->content is non-empty
-         * Idea from: http://blog.bartlweb.net/2011/02/seitentitel-aus-einer-extension-heraus-veraendern/
-         *
-         * Apart from the general hackishness of this approach, it relies on the pre-set page title only
-         * appearing once inside the <title> tag. Otherwise the order of the components in the page title will be wrong.
-         */
-        if ($GLOBALS['TSFE']->content) {
-            $GLOBALS['TSFE']->content = preg_replace(
-                '/(<title>.*)' . $GLOBALS['TSFE']->page['title'] . '(.*<\/title>)/',
-                '$1' . $title . '$2',
-                (string)$GLOBALS['TSFE']->content
-            );
-        } else {
-            $GLOBALS['TSFE']->page['title'] = $title;
-        }
+        // $GLOBALS['TSFE'] no longer exists in TYPO3 14, the page title is set via the PageTitle API.
+        $this->recordTitleProvider->setTitle((string)$title);
     }
 }
