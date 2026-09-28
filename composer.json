@@ -37,7 +37,8 @@
     "solarium/solarium": ">=6.0 <7.0",
     "typo3/cms-core": "^14.0",
     "typo3/cms-felogin": "^14.0",
-    "friendsoftypo3/fontawesome-provider": "^1.0.6"
+    "friendsoftypo3/fontawesome-provider": "^1.0.6",
+	  "fluidtypo3/vhs": "8.0"
   },
   "require-dev": {
     "typo3/testing-framework": "^9.0",
